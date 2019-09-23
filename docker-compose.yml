@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: ./config/nginx
+    ports:
+      - 8080:80
+
+  php:
+    build:
+      context: ./config/php-fpm
+
