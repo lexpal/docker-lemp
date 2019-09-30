@@ -6,8 +6,21 @@ services:
       context: ./config/nginx
     ports:
       - 8080:80
+    volumes:
+      - ./../php-project:/var/www/html
+      - ./config/nginx/:/etc/nginx/conf.d/
+#    links:
+#      - php
 
   php:
-    build:
-      context: ./config/php-fpm
+#    build:
+#      context: ./config/php-fpm
+    image: php:7-fpm
+    volumes:
+      - ./../php-project:/var/www/html
 
+#  adminer:
+#    image: adminer
+#    restart: on-failure
+#    ports:
+#      - '8081:8080'
