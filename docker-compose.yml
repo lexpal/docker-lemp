@@ -2,20 +2,23 @@ version: '3.7'
 
 services:
   web:
-    build:
-      context: ./config/nginx
+    build: ./config/nginx
+    environment:
+      - PHP_IDE_CONFIG=serverName=symfony.localhost
     ports:
       - 8080:80
     volumes:
       - ./../php-project:/var/www/html
       - ./config/nginx/:/etc/nginx/conf.d/
-#    links:
-#      - php
+      - ./var/log/nginx/:/var/log/nginx/
 
   php:
-#    build:
-#      context: ./config/php-fpm
-    image: php:7-fpm
+#    image: php:7-fpm
+    build: ./config/php-fpm
+    environment:
+      - PHP_IDE_CONFIG=serverName=symfony.localhost
+    ports:
+      - "9000:9001"
     volumes:
       - ./../php-project:/var/www/html
 
