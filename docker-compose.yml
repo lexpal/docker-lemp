@@ -3,24 +3,23 @@ version: '3.7'
 services:
   web:
     build: ./config/nginx
-    environment:
-      - PHP_IDE_CONFIG=serverName=symfony.localhost
-    ports:
-      - 8080:80
+    env_file: .env
     volumes:
-      - ./../php-project:/var/www/html
-      - ./config/nginx/:/etc/nginx/conf.d/
-      - ./var/log/nginx/:/var/log/nginx/
+      - ./config/nginx/conf.d/:/etc/nginx/conf.d/:cached
+      - ${PROJECT_PATH}:/var/www/html:cached
+      - ${PROJECT_PATH}/var/logs/nginx/:/var/log/nginx/:cached
+#    ports:
+#      - 8080:80
 
   php:
 #    image: php:7-fpm
     build: ./config/php-fpm
-    environment:
-      - PHP_IDE_CONFIG=serverName=symfony.localhost
-    ports:
-      - "9000:9001"
+    env_file: .env
     volumes:
-      - ./../php-project:/var/www/html
+      - ${PROJECT_PATH}:/var/www/html:cached
+      - ${PROJECT_PATH}/var/logs/symfony:/var/www/symfony/var/log:cached
+#    ports:
+#      - "9000:9001"
 
 #  adminer:
 #    image: adminer

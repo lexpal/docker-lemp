@@ -1,2 +1,8 @@
 FROM nginx:latest
-COPY php-docker.conf /etc/nginx/conf.d/php-docker.conf
+
+#COPY site.conf /etc/nginx/conf.d/site.conf
+
+CMD ["nginx"]
+
+EXPOSE 80
+EXPOSE 443
