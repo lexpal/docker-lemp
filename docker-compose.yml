@@ -7,19 +7,17 @@ services:
     volumes:
       - ./config/nginx/conf.d/:/etc/nginx/conf.d/:cached
       - ${PROJECT_PATH}:/var/www/html:cached
-      - ${PROJECT_PATH}/var/logs/nginx/:/var/log/nginx/:cached
-#    ports:
-#      - 8080:80
+      - ${PROJECT_PATH}/var/log/nginx/:/var/log/nginx/:cached
+    ports:
+      - 80:80
 
   php:
-#    image: php:7-fpm
     build: ./config/php-fpm
     env_file: .env
     volumes:
       - ${PROJECT_PATH}:/var/www/html:cached
-      - ${PROJECT_PATH}/var/logs/symfony:/var/www/symfony/var/log:cached
-#    ports:
-#      - "9000:9001"
+    extra_hosts:
+      - "docker-host.localhost:172.17.0.1"
 
 #  adminer:
 #    image: adminer
